@@ -22,18 +22,20 @@ public class Client {
         Thread clientReceiverThread = new Thread(clientReceiver);
         clientReceiverThread.start();
     }
+    private void sendPacket(Type type, String content) throws IOException {
+        objectOutputStream.writeObject(new Packet(type, content));
+        objectOutputStream.flush();
+    }
     public void sendMessage(String message){
         try {
-            objectOutputStream.writeObject(new Packet(Type.MESSAGE, username + ": " + message));
-            objectOutputStream.flush();
+            sendPacket(Type.MESSAGE, username + ": " + message);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
     public void sendWelcomeMessage(){
         try {
-            objectOutputStream.writeObject(new Packet(Type.MESSAGE, username + " Has entered the chat!"));
-            objectOutputStream.flush();
+            sendPacket(Type.MESSAGE, username + " Has entered the chat!");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
