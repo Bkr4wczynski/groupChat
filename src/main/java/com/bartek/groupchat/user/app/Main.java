@@ -13,7 +13,6 @@ public class Main {
         Client client = new Client(InetAddress.getByName("localhost"));
 
         while (true){
-            System.out.println("Your message: ");
             input = scanner.nextLine();
             client.sendMessage(input);
         }
