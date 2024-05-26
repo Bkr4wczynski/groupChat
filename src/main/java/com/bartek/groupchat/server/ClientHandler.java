@@ -1,29 +1,30 @@
 package com.bartek.groupchat.server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import com.bartek.groupchat.utils.Packet;
+import com.bartek.groupchat.utils.Type;
+
+import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler implements Runnable{
     private final Socket socket;
-    private final DataInputStream dataInputStream;
-    private final DataOutputStream dataOutputStream;
+    private final ObjectInputStream objectInputStream;
+    private final ObjectOutputStream objectOutputStream;
 
     public ClientHandler(Socket socket) throws IOException {
         this.socket = socket;
-        this.dataInputStream = new DataInputStream(socket.getInputStream());
-        this.dataOutputStream = new DataOutputStream(socket.getOutputStream());
+        this.objectInputStream = new ObjectInputStream(socket.getInputStream());
+        this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
     }
 
     @Override
     public void run() {
         while (true){
             try {
-                String received = dataInputStream.readUTF();
-                dataOutputStream.writeUTF(received);
-                System.out.println(received);
-            } catch (IOException e) {
+                Packet received = (Packet) objectInputStream.readObject();
+                objectOutputStream.writeObject(new Packet(Type.MESSAGE, received.getContent()));
+                objectOutputStream.flush();
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
