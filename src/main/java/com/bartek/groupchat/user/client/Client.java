@@ -28,6 +28,7 @@ public class Client {
     }
     public void sendExitRequest(){
         try {
+            sendPacket(Type.MESSAGE, username + " left the chat");
             sendPacket(Type.COMMAND, "exit");
             closeStreams();
         } catch (IOException e) {
