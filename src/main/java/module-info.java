@@ -4,6 +4,6 @@ module com.bartek.groupchat {
 
     requires org.controlsfx.controls;
 
-    opens com.bartek.groupchat to javafx.fxml;
+    opens com.bartek.groupchat.user.app to javafx.fxml;
     exports com.bartek.groupchat.user.app;
 }
