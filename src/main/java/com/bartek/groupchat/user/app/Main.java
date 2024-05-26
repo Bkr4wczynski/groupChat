@@ -17,7 +17,13 @@ public class Main {
         client.sendWelcomeMessage();
         while (true){
             input = scanner.nextLine();
-            client.sendMessage(input);
+            if (input.equalsIgnoreCase("exit")){
+                client.sendExitRequest();
+                break;
+            }
+            else {
+                client.sendMessage(input);
+            }
         }
     }
     private static String reformatUsername(String username){

@@ -25,10 +25,24 @@ public class ClientHandler implements Runnable{
         while (true){
             try {
                 Packet received = (Packet) objectInputStream.readObject();
-                sendMessageToAllClients(new Packet(Type.MESSAGE, received.getContent()));
-                objectOutputStream.flush();
-            } catch (IOException | ClassNotFoundException e) {
+                if (received.getType() == Type.MESSAGE){
+                    sendMessageToAllClients(new Packet(Type.MESSAGE, received.getContent()));
+                }
+                else if (received.getType() == Type.COMMAND){
+                    if (received.getContent().equalsIgnoreCase("exit")){
+                        clientHandlerList.remove(this);
+                        break;
+                    }
+                }
+            }
+            catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
+            } catch (IOException e) {
+                try {
+                    closeStreams();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }
@@ -37,5 +51,10 @@ public class ClientHandler implements Runnable{
             client.objectOutputStream.writeObject(packet);
             client.objectOutputStream.flush();
         }
+    }
+    private void closeStreams() throws IOException {
+        objectInputStream.close();
+        objectOutputStream.close();
+        socket.close();
     }
 }

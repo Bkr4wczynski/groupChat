@@ -2,7 +2,6 @@ package com.bartek.groupchat.user.client;
 
 import com.bartek.groupchat.utils.Packet;
 
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
@@ -35,5 +34,9 @@ public class ClientReceiver implements Runnable{
 
     public void setUsername(String username) {
         this.username = username;
+    }
+    public void close() throws IOException {
+        objectInputStream.close();
+        System.exit(0);
     }
 }

@@ -26,6 +26,14 @@ public class Client {
         objectOutputStream.writeObject(new Packet(type, content));
         objectOutputStream.flush();
     }
+    public void sendExitRequest(){
+        try {
+            sendPacket(Type.COMMAND, "exit");
+            closeStreams();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public void sendMessage(String message){
         try {
             sendPacket(Type.MESSAGE, username + ": " + message);
@@ -48,5 +56,10 @@ public class Client {
     public void setUsername(String username) {
         this.username = username;
         clientReceiver.setUsername(username);
+    }
+    private void closeStreams() throws IOException {
+        objectOutputStream.close();
+        clientReceiver.close();
+        socket.close();
     }
 }
