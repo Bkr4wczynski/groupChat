@@ -6,4 +6,6 @@ module com.bartek.groupchat {
 
     opens com.bartek.groupchat.user.app to javafx.fxml;
     exports com.bartek.groupchat.user.app;
+    opens com.bartek.groupchat.user.app.controllers to javafx.fxml;
+    exports com.bartek.groupchat.user.app.controllers;
 }
