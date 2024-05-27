@@ -1,6 +1,6 @@
 package com.bartek.groupchat.user.app.controllers;
 
-import com.bartek.groupchat.user.app.App;
+import com.bartek.groupchat.user.app.GUI_GroupChat;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -35,7 +35,7 @@ public class entryController {
     }
     private void redirectToChatPage(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(FXMLLoader.load(App.class.getResource("/com/bartek/groupchat/FXML/chat.fxml")));
+        Scene scene = new Scene(FXMLLoader.load(GUI_GroupChat.class.getResource("/com/bartek/groupchat/FXML/chat.fxml")));
         stage.setScene(scene);
         stage.show();
     }

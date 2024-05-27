@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Scanner;
 
-public class Main {
+public class CLI_GroupChat {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         Client client = new Client(InetAddress.getByName("localhost"));
