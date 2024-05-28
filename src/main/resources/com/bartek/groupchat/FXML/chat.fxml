@@ -9,7 +9,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bartek.groupchat.user.app.controllers.ChatController">
    <children>
-      <VBox layoutX="50.0" prefHeight="600.0" prefWidth="700.0">
+      <VBox layoutX="50.0" prefHeight="600.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label alignment="CENTER" prefHeight="50.0" prefWidth="700.0" text="Group chat">
                <font>
