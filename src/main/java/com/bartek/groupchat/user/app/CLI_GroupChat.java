@@ -1,5 +1,6 @@
 package com.bartek.groupchat.user.app;
 
+import com.bartek.groupchat.utils.AppType;
 import com.bartek.groupchat.user.client.Client;
 
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.util.Scanner;
 public class CLI_GroupChat {
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        Client client = new Client(InetAddress.getByName("localhost"));
+        Client client = new Client(InetAddress.getByName("localhost"), AppType.CLI);
         String input;
         System.out.println("Enter your username: ");
         String username = reformatUsername(scanner.nextLine());

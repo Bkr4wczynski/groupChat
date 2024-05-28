@@ -3,16 +3,16 @@ package com.bartek.groupchat.utils;
 import java.io.Serializable;
 
 public class Packet implements Serializable {
-    private Type type;
+    private PacketType packetType;
     private String content;
 
-    public Packet(Type type, String content) {
-        this.type = type;
+    public Packet(PacketType packetType, String content) {
+        this.packetType = packetType;
         this.content = content;
     }
 
-    public Type getType() {
-        return type;
+    public PacketType getType() {
+        return packetType;
     }
 
     public String getContent() {

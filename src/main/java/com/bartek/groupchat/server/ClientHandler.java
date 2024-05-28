@@ -1,7 +1,7 @@
 package com.bartek.groupchat.server;
 
 import com.bartek.groupchat.utils.Packet;
-import com.bartek.groupchat.utils.Type;
+import com.bartek.groupchat.utils.PacketType;
 
 import java.io.*;
 import java.net.Socket;
@@ -25,10 +25,10 @@ public class ClientHandler implements Runnable{
         while (true){
             try {
                 Packet received = (Packet) objectInputStream.readObject();
-                if (received.getType() == Type.MESSAGE){
-                    sendMessageToAllClients(new Packet(Type.MESSAGE, received.getContent()));
+                if (received.getType() == PacketType.MESSAGE){
+                    sendMessageToAllClients(new Packet(PacketType.MESSAGE, received.getContent()));
                 }
-                else if (received.getType() == Type.COMMAND){
+                else if (received.getType() == PacketType.COMMAND){
                     if (received.getContent().equalsIgnoreCase("exit")){
                         clientHandlerList.remove(this);
                         break;

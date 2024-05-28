@@ -1,6 +1,6 @@
 package com.bartek.groupchat.utils;
 
-public enum Type{
+public enum PacketType {
     COMMAND,
     MESSAGE
 }

@@ -1,5 +1,6 @@
 package com.bartek.groupchat.user.app;
 
+import com.bartek.groupchat.utils.AppType;
 import com.bartek.groupchat.user.client.Client;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -40,7 +41,7 @@ public class GUI_GroupChat extends Application {
 
     public static void main(String[] args) throws IOException {
         try{
-            CLIENT = new Client(InetAddress.getByName("localhost"));
+            CLIENT = new Client(InetAddress.getByName("localhost"), AppType.GUI);
         }
         catch (ConnectException e){
             System.out.println("Server is offline!");
