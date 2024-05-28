@@ -23,7 +23,7 @@ public class ClientReceiver implements Runnable{
                 String message = formatReceivedMessage(received.getContent());
                 chatController.receiveMessage(message);
             } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
+                System.exit(0);
             }
         }
     }

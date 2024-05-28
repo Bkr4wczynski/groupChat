@@ -23,8 +23,10 @@ public class GUI_GroupChat extends Application {
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(windowEvent -> {
-            if (logout(windowEvent))
+            if (logout(windowEvent)){
                 stage.close();
+                CLIENT.sendExitRequest();
+            }
         });
     }
     private boolean logout(WindowEvent windowEvent){
