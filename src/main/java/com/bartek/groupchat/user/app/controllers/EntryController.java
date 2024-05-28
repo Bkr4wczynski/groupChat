@@ -33,7 +33,7 @@ public class EntryController {
     public void clearWarningsLabel(){
         warningsLabel.setText("");
     }
-    private boolean validateUsername(String username){
+    public boolean validateUsername(String username){
         return username.matches("[$a-zA-Z0-9-_]{3,19}");
     }
     private void redirectToChatPage(ActionEvent event) throws IOException {
