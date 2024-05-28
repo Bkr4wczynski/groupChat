@@ -1,6 +1,7 @@
 package com.bartek.groupchat.user.app.controllers;
 
 import com.bartek.groupchat.user.app.GUI_GroupChat;
+import com.bartek.groupchat.user.client.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,9 +12,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class entryController {
+public class EntryController {
     public TextField nameEntry;
     public Label warningsLabel;
+    private final Client client = GUI_GroupChat.CLIENT;
 
     public void enterGroupChat(ActionEvent event){
         String enteredName = nameEntry.getText();
@@ -22,6 +24,7 @@ public class entryController {
             return;
         }
         try {
+            enterToServerGroupChat(enteredName);
             redirectToChatPage(event);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -38,5 +41,9 @@ public class entryController {
         Scene scene = new Scene(FXMLLoader.load(GUI_GroupChat.class.getResource("/com/bartek/groupchat/FXML/chat.fxml")));
         stage.setScene(scene);
         stage.show();
+    }
+    private void enterToServerGroupChat(String username){
+        client.setUsername(username);
+        client.sendWelcomeMessage();
     }
 }

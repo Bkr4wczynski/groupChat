@@ -12,7 +12,7 @@ public class Client {
     private InetAddress ip;
     private ObjectOutputStream objectOutputStream;
     private String username;
-    private ClientReceiver clientReceiver;
+    public ClientReceiver clientReceiver;
 
     public Client(InetAddress ip) throws IOException {
         this.ip = ip;

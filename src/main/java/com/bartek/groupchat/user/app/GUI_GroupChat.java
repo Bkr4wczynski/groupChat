@@ -14,6 +14,7 @@ import java.net.ConnectException;
 import java.net.InetAddress;
 
 public class GUI_GroupChat extends Application {
+    public static Client CLIENT;
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(GUI_GroupChat.class.getResource("/com/bartek/groupchat/FXML/entry.fxml"));
@@ -37,7 +38,7 @@ public class GUI_GroupChat extends Application {
 
     public static void main(String[] args) throws IOException {
         try{
-            Client client = new Client(InetAddress.getByName("localhost"));
+            CLIENT = new Client(InetAddress.getByName("localhost"));
         }
         catch (ConnectException e){
             System.out.println("Server is offline!");
