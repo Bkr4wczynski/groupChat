@@ -29,8 +29,7 @@ public class Client {
     }
     public void sendExitRequest(){
         try {
-            sendPacket(PacketType.MESSAGE, username + " has left the chat");
-            sendPacket(PacketType.COMMAND, "exit");
+            sendPacket(PacketType.EXIT, username);
             closeStreams();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -61,8 +60,7 @@ public class Client {
     public void setUsername(String username) {
         this.username = username;
         try {
-            sendPacket(PacketType.COMMAND, "setusername");
-            sendPacket(PacketType.MESSAGE, username);
+            sendPacket(PacketType.SETUSERNAME, "setusername");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

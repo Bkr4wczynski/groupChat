@@ -35,22 +35,19 @@ public class ClientHandler implements Runnable{
         while (flag){
             try {
                 Packet received = (Packet) objectInputStream.readObject();
-                if (received.getType() == PacketType.MESSAGE){
-                    sendMessageToAllClients(new Packet(PacketType.MESSAGE, received.getContent()));
-                    System.out.println(username);
-                }
-                else if (received.getType() == PacketType.COMMAND){
-                    switch (received.getContent().toLowerCase()){
-                        case "exit":
-                            clientHandlerList.remove(this);
-                            flag = false;
-                            break;
-                        case "setusername":
-                            Packet packet = (Packet) objectInputStream.readObject();
-                            if (isUsernameAvailable(packet.getContent()))
-                                setUsername(packet.getContent());
-                            break;
-                    }
+                switch (received.getType()){
+                    case PacketType.MESSAGE:
+                        sendMessageToAllClients(new Packet(PacketType.MESSAGE, received.getContent()));
+                        break;
+                    case PacketType.EXIT:
+                        clientHandlerList.remove(this);
+                        sendMessageToAllClients(new Packet(PacketType.MESSAGE, received.getContent()+ " has left the chat"));
+                        flag = false;
+                        break;
+                    case PacketType.SETUSERNAME:
+                        if (isUsernameAvailable(received.getContent()))
+                            setUsername(received.getContent());
+                        break;
                 }
             }
             catch (ClassNotFoundException e) {
