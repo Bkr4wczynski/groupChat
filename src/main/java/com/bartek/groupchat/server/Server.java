@@ -11,14 +11,8 @@ import java.util.Scanner;
 
 public class Server {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Provide password: ");
-        if (scanner.nextLine().equals(decryptPassword(getPassword())))
-            System.out.println("Successful authorization");
-        else {
-            System.out.println("Authorization failed!");
+        if (!authorizeUser())
             System.exit(0);
-        }
         List<ClientHandler> clientHandlers = new ArrayList<>();
         try (ServerSocket serverSocket = new ServerSocket(5000)){
             System.out.println("Waiting for clients...");
@@ -36,6 +30,19 @@ public class Server {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    private static boolean authorizeUser(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Provide password: ");
+        if (scanner.nextLine().equals(decryptPassword(getPassword()))){
+            System.out.println("Successful authorization");
+            scanner.close();
+            return true;
+        }
+        scanner.close();
+        System.out.println("Authorization failed!");
+        return false;
+
     }
     private static String decryptPassword(String password){
         char xorKey = 'P';
