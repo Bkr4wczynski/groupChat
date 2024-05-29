@@ -50,6 +50,11 @@ public class Client {
         }
     }
     public boolean isUsernameAvailable(String username){
+        try {
+            sendPacket(PacketType.USERNAME_AVAILABILITY, username);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return true;
     }
 
@@ -60,7 +65,7 @@ public class Client {
     public void setUsername(String username) {
         this.username = username;
         try {
-            sendPacket(PacketType.SETUSERNAME, "setusername");
+            sendPacket(PacketType.SET_USERNAME, username);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

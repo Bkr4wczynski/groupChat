@@ -3,5 +3,6 @@ package com.bartek.groupchat.utils;
 public enum PacketType {
     EXIT,
     MESSAGE,
-    SETUSERNAME
+    SET_USERNAME,
+    USERNAME_AVAILABILITY
 }

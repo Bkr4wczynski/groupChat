@@ -3,6 +3,7 @@ package com.bartek.groupchat.user.client;
 import com.bartek.groupchat.utils.AppType;
 import com.bartek.groupchat.user.app.controllers.ChatController;
 import com.bartek.groupchat.utils.Packet;
+import com.bartek.groupchat.utils.PacketType;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,8 +24,16 @@ public class ClientReceiver implements Runnable{
         while (true){
             try {
                 Packet received = (Packet) objectInputStream.readObject();
-                String message = formatReceivedMessage(received.getContent());
-                displayMessage(message);
+                switch (received.getType()){
+                    case PacketType.MESSAGE:
+                        String message = formatReceivedMessage(received.getContent());
+                        displayMessage(message);
+                        break;
+                    case PacketType.USERNAME_AVAILABILITY:
+                        System.out.println(received.getContent());
+                        break;
+                }
+
             } catch (IOException | ClassNotFoundException e) {
                 System.exit(0);
             }

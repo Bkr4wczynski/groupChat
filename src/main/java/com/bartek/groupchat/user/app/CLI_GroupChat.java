@@ -22,6 +22,7 @@ public class CLI_GroupChat {
         String input;
         System.out.println("Enter your username: ");
         String username = reformatUsername(scanner.nextLine());
+        boolean availability = client.isUsernameAvailable(username);
         client.setUsername(username);
         client.sendWelcomeMessage();
         while (true){

@@ -44,9 +44,14 @@ public class ClientHandler implements Runnable{
                         sendMessageToAllClients(new Packet(PacketType.MESSAGE, received.getContent()+ " has left the chat"));
                         flag = false;
                         break;
-                    case PacketType.SETUSERNAME:
+                    case PacketType.SET_USERNAME:
                         if (isUsernameAvailable(received.getContent()))
                             setUsername(received.getContent());
+                        break;
+                    case PacketType.USERNAME_AVAILABILITY:
+                        objectOutputStream.writeObject(new Packet(PacketType.USERNAME_AVAILABILITY,
+                                ""+isUsernameAvailable(received.getContent())));
+                        objectOutputStream.flush();
                         break;
                 }
             }
