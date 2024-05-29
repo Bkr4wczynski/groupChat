@@ -20,11 +20,18 @@ public class CLI_GroupChat {
             System.exit(0);
         }
         String input;
-        System.out.println("Enter your username: ");
-        String username = reformatUsername(scanner.nextLine());
-        boolean availability = client.isUsernameAvailable(username);
+        String username;
+        boolean availability = false;
+        do {
+            System.out.println("Enter your username: ");
+            username = reformatUsername(scanner.nextLine());
+            availability = client.isUsernameAvailable(username);
+            if (!availability)
+                System.out.println("Username is not available!");
+        } while (!availability);
         client.setUsername(username);
         client.sendWelcomeMessage();
+        client.startClientReceiver();
         while (true){
             input = scanner.nextLine();
             if (input.equalsIgnoreCase("exit")){

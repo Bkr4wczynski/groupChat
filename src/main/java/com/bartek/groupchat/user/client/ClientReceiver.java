@@ -29,9 +29,6 @@ public class ClientReceiver implements Runnable{
                         String message = formatReceivedMessage(received.getContent());
                         displayMessage(message);
                         break;
-                    case PacketType.USERNAME_AVAILABILITY:
-                        System.out.println(received.getContent());
-                        break;
                 }
 
             } catch (IOException | ClassNotFoundException e) {
@@ -63,4 +60,5 @@ public class ClientReceiver implements Runnable{
         objectInputStream.close();
         System.exit(0);
     }
+
 }

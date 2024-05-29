@@ -1,5 +1,6 @@
 package com.bartek.groupchat.user.client;
 
+import com.bartek.groupchat.user.app.controllers.ChatController;
 import com.bartek.groupchat.utils.AppType;
 import com.bartek.groupchat.utils.Packet;
 import com.bartek.groupchat.utils.PacketType;
@@ -12,16 +13,23 @@ public class Client {
     private Socket socket;
     private InetAddress ip;
     private ObjectOutputStream objectOutputStream;
+    private ObjectInputStream objectInputStream;
     private String username;
     public ClientReceiver clientReceiver;
+    private AppType appType;
 
     public Client(InetAddress ip, AppType appType) throws IOException {
         this.ip = ip;
+        this.appType = appType;
         this.socket = new Socket(ip, 5000);
         this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-        clientReceiver = new ClientReceiver(new ObjectInputStream(socket.getInputStream()), appType);
+        this.objectInputStream = new ObjectInputStream(socket.getInputStream());
+    }
+    public void startClientReceiver(){
+        clientReceiver = new ClientReceiver(objectInputStream, appType);
         Thread clientReceiverThread = new Thread(clientReceiver);
         clientReceiverThread.start();
+        clientReceiver.setUsername(username);
     }
     private void sendPacket(PacketType packetType, String content) throws IOException {
         objectOutputStream.writeObject(new Packet(packetType, content));
@@ -52,10 +60,11 @@ public class Client {
     public boolean isUsernameAvailable(String username){
         try {
             sendPacket(PacketType.USERNAME_AVAILABILITY, username);
-        } catch (IOException e) {
+            Packet packet = (Packet) objectInputStream.readObject();
+            return packet.getContent().equalsIgnoreCase("true");
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return true;
     }
 
     public String getUsername() {
@@ -69,7 +78,6 @@ public class Client {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        clientReceiver.setUsername(username);
     }
     private void closeStreams() throws IOException {
         objectOutputStream.close();

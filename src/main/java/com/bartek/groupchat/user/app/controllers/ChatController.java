@@ -25,6 +25,7 @@ public class ChatController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        client.startClientReceiver();
         client.clientReceiver.setChatController(this);
     }
 }

@@ -75,7 +75,6 @@ public class ClientHandler implements Runnable{
     private void closeStreams() throws IOException {
         objectInputStream.close();
         objectOutputStream.close();
-        socket.close();
     }
     private boolean isUsernameAvailable(String username){
         for (ClientHandler clientHandler : clientHandlerList){
