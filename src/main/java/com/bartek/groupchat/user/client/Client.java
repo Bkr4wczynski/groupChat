@@ -60,6 +60,12 @@ public class Client {
 
     public void setUsername(String username) {
         this.username = username;
+        try {
+            sendPacket(PacketType.COMMAND, "setusername");
+            sendPacket(PacketType.MESSAGE, username);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         clientReceiver.setUsername(username);
     }
     private void closeStreams() throws IOException {

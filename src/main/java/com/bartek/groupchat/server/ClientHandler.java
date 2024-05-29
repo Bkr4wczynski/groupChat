@@ -37,12 +37,18 @@ public class ClientHandler implements Runnable{
                 Packet received = (Packet) objectInputStream.readObject();
                 if (received.getType() == PacketType.MESSAGE){
                     sendMessageToAllClients(new Packet(PacketType.MESSAGE, received.getContent()));
+                    System.out.println(username);
                 }
                 else if (received.getType() == PacketType.COMMAND){
                     switch (received.getContent().toLowerCase()){
                         case "exit":
                             clientHandlerList.remove(this);
                             flag = false;
+                            break;
+                        case "setusername":
+                            Packet packet = (Packet) objectInputStream.readObject();
+                            if (isUsernameAvailable(packet.getContent()))
+                                setUsername(packet.getContent());
                             break;
                     }
                 }
