@@ -50,6 +50,9 @@ public class Client {
             throw new RuntimeException(e);
         }
     }
+    public boolean isUsernameAvailable(String username){
+        return true;
+    }
 
     public String getUsername() {
         return username;

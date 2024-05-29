@@ -23,6 +23,10 @@ public class EntryController {
             warningsLabel.setText("Username is not valid");
             return;
         }
+        if (!isUsernameAvailable(enteredName)){
+            warningsLabel.setText("Username is already taken");
+            return;
+        }
         try {
             enterToServerGroupChat(enteredName);
             redirectToChatPage(event);
@@ -35,6 +39,9 @@ public class EntryController {
     }
     public boolean validateUsername(String username){
         return username.matches("[$a-zA-Z0-9-_]{3,19}");
+    }
+    public boolean isUsernameAvailable(String username){
+        return client.isUsernameAvailable(username);
     }
     private void redirectToChatPage(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
