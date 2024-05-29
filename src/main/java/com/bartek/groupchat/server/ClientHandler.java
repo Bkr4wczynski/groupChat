@@ -12,6 +12,7 @@ public class ClientHandler implements Runnable{
     private final ObjectInputStream objectInputStream;
     private final ObjectOutputStream objectOutputStream;
     private List<ClientHandler> clientHandlerList;
+    private String username;
 
     public ClientHandler(Socket socket, List<ClientHandler> clientHandlerList) throws IOException {
         this.socket = socket;
@@ -20,18 +21,29 @@ public class ClientHandler implements Runnable{
         this.objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public void run() {
-        while (true){
+        boolean flag = true;
+        while (flag){
             try {
                 Packet received = (Packet) objectInputStream.readObject();
                 if (received.getType() == PacketType.MESSAGE){
                     sendMessageToAllClients(new Packet(PacketType.MESSAGE, received.getContent()));
                 }
                 else if (received.getType() == PacketType.COMMAND){
-                    if (received.getContent().equalsIgnoreCase("exit")){
-                        clientHandlerList.remove(this);
-                        break;
+                    switch (received.getContent().toLowerCase()){
+                        case "exit":
+                            clientHandlerList.remove(this);
+                            flag = false;
+                            break;
                     }
                 }
             }
@@ -56,5 +68,12 @@ public class ClientHandler implements Runnable{
         objectInputStream.close();
         objectOutputStream.close();
         socket.close();
+    }
+    private boolean isUsernameAvailable(String username){
+        for (ClientHandler clientHandler : clientHandlerList){
+            if (clientHandler.getUsername() != null && clientHandler.getUsername().equals(username))
+                return false;
+        }
+        return true;
     }
 }
